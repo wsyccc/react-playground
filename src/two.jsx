@@ -1,7 +1,7 @@
 import Counter from "./counter.jsx";
 import {useAtom} from "jotai";
 import {atomCounter} from "./atom.js";
-import {useEffect} from "react";
+import {Profiler, useEffect} from "react";
 
 function Two() {
   const [count, setCount] = useAtom(atomCounter);
@@ -11,11 +11,18 @@ function Two() {
   }, [count]);
 
   return (
-    <div>
-      <h1>Two atom {count}</h1>
-      <Counter/>
-      <button onClick={() => setCount((count) => count + 1)}>atom add</button>
-    </div>
+    <Profiler id={"test"} onRender={(id, phase) => {
+      if (phase === "mount") {
+        console.log(`Two 挂载：${phase}`);
+      }
+    }}>
+      <div>
+        <h1>Two atom {count}</h1>
+        <Counter/>
+        <button onClick={() => setCount((count) => count + 1)}>atom add</button>
+      </div>
+    </Profiler>
+
   );
 }
 

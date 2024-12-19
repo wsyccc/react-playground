@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import  {Profiler, useState} from 'react'
 
 function Counter() {
   const [count, setCount] = useState(0)
 
   return (
-    <div>
-      count: {count}
-      <button onClick={() => setCount((count) => count + 1)}>add</button>
-    </div>
+    <Profiler id={"Counter"} onRender={(id, phase, actualDuration) => {
+      console.log(`${id} 操作：${phase} 实际渲染时间：${actualDuration}ms`);
+    }}>
+      <div>
+        count: {count}
+        <button onClick={() => setCount((count) => count + 1)}>add</button>
+      </div>
+    </Profiler>
+
   )
 }
 
